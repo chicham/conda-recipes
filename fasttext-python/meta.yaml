@@ -1,0 +1,42 @@
+{% set name = "fasttext-python" %}
+{% set version = "0.8.22" %}
+{% set release_name = "58fe65" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://github.com/facebookresearch/fastText/archive/{{ release_name }}.tar.gz
+
+build:
+  number: 0
+  # skip: true  # [win]
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - pip
+    - pybind11
+  run:
+    - python
+    - numpy
+
+test:
+  imports:
+    - fastText
+
+about:
+  home: https://fasttext.cc/
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: 'fastText - Library for efficient text classification and representation learning (python bindings)'
+  dev_url: https://github.com/facebookresearch/fastText
+  doc_url: https://fasttext.cc/docs/en/support.html
+  license: BSD-3-Clause
